@@ -181,6 +181,8 @@ void Task::fire(const std::string& instance)
   if (instance != "dispatcher" and instance != "collector") {
     on_this_start(this);
     on_start(this);
+    on_this_instance_start(this, instance);
+    on_instance_start(this, instance);
   }
   running_instances_[instance]++;
   queued_firings_[instance] = std::max(queued_firings_[instance] - 1, 0);

@@ -45,6 +45,8 @@ class XBT_PUBLIC Task {
 
   inline static xbt::signal<void(Task*)> on_start;
   xbt::signal<void(Task*)> on_this_start;
+  inline static xbt::signal<void(Task*, const std::string&)> on_instance_start;
+  xbt::signal<void(Task*, const std::string&)> on_this_instance_start;
   inline static xbt::signal<void(Task*)> on_completion;
   xbt::signal<void(Task*)> on_this_completion;
   inline static xbt::signal<void(Task*, const std::string&)> on_instance_completion;
@@ -132,6 +134,16 @@ public:
   /** Add a callback fired before a task activity starts.
    * Triggered after the on_this_start function**/
   static void on_start_cb(const std::function<void(Task*)>& cb) { on_start.connect(cb); }
+  /** Add a callback fired before this task instance activity starts */
+  void on_this_instance_start_cb(const std::function<void(Task*, const std::string&)>& func) {
+    on_this_instance_start.connect(func);
+  }
+  /** Add a callback fired before a task instance activity starts.
+   * Triggered after the on_this_instance_start function**/
+  static void on_instance_start_cb(const std::function<void(Task*, const std::string&)>& cb)
+  {
+    on_instance_start.connect(cb);
+  }
   /** Add a callback fired before this task activity ends */
   void on_this_completion_cb(const std::function<void(Task*)>& func) { on_this_completion.connect(func); };
   /** Add a callback fired after a task activity ends.
